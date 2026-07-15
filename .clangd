@@ -1,0 +1,2 @@
+CompileFlags:
+  Add: [--target=riscv32-unknown-elf, -march=rv32ima, -mabi=ilp32, -ffreestanding]
