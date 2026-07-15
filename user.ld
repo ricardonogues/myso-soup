@@ -1,7 +1,7 @@
 ENTRY(start)
 
 SECTIONS {
-  . = 0x10000000;
+  . = 0x1000000;
 
   .text : {
     KEEP(*(.text.start));
@@ -18,11 +18,11 @@ SECTIONS {
 
   .bss : ALIGN(4) {
     *(.bss .bss.* .sbss .sbss.*);
-
+  
     . = ALIGN(16);
     . += 64 * 1024;
     __stack_top = .;
 
-    ASSERT(. > 0x1800000, "too large executable");
+    ASSERT(. < 0x1800000, "too large executable");
   }
 }
