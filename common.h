@@ -27,6 +27,8 @@ typedef uint32_t vaddr_t;
  */
 #define offsetof(type, member) ((size_t)&(((type *)0)->member))
 #define SYS_PUTCHAR 1
+#define SYS_GETCHAR 2
+#define SYS_EXIT 3
 
 void *memset(void *buffer, char c, size_t n);
 void *memcpy(void *destination, const void *source, size_t n);

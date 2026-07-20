@@ -3,17 +3,6 @@
 
 extern char __stack_top[];
 
-__attribute__((noreturn)) void exit(void) {
-  for (;;)
-    ;
-}
-
-__attribute__((section(".text.start"))) __attribute((naked)) void start(void) {
-  __asm__ __volatile__("mv sp, %[stack_top]\n"
-                       "call main\n"
-                       "call exit\n" ::[stack_top] "r"(__stack_top));
-}
-
 int syscall(int sysno, int arg0, int arg1, int arg2) {
   register int a0 __asm__("a0") = arg0;
   register int a1 __asm__("a1") = arg1;
@@ -28,4 +17,18 @@ int syscall(int sysno, int arg0, int arg1, int arg2) {
   return a0;
 }
 
+__attribute__((noreturn)) void exit(void) {
+  syscall(SYS_EXIT, 0, 0, 0);
+  for (;;)
+    ;
+}
+
+__attribute__((section(".text.start"))) __attribute((naked)) void start(void) {
+  __asm__ __volatile__("mv sp, %[stack_top]\n"
+                       "call main\n"
+                       "call exit\n" ::[stack_top] "r"(__stack_top));
+}
+
 void putchar(char ch) { syscall(SYS_PUTCHAR, ch, 0, 0); }
+
+int getchar(void) { return syscall(SYS_GETCHAR, 0, 0, 0); }

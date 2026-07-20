@@ -5,6 +5,7 @@
 struct trap_frame {
   uint32_t ra;
   uint32_t gb;
+  uint32_t tp;
   uint32_t t0;
   uint32_t t1;
   uint32_t t2;
@@ -33,7 +34,7 @@ struct trap_frame {
   uint32_t s10;
   uint32_t s11;
   uint32_t sp;
-};
+} __attribute__((packed));
 
 void handle_trap(struct trap_frame *f);
 void kernel_entry(void);
